@@ -46,9 +46,13 @@ function Contact(firstName, lastName, phoneNumber, email, address) {
   this.address = address
 }
 
-Contact.prototype.fullName = function() {
-  return this.firstName + " " + this.lastName;
+
+function Address(home, work) {
+  this.homeAddress = home,
+  this.workAddress = work
 }
+
+Contact.address = Address();
 
 // User Interface Logic ---------
 var addressBook = new AddressBook();
@@ -80,12 +84,15 @@ function attachContactListeners() {
 
 function showContact(contactId) {
   var contact = addressBook.findContact(contactId);
+  // var address = addressBook.findAddress(contactId);
   $("#show-contact").show();
   $(".first-name").html(contact.firstName);
   $(".last-name").html(contact.lastName);
   $(".phone-number").html(contact.phoneNumber);
   $(".email-address").html(contact.email);
-  $(".physical-address").html(contact.address);
+  $(".home-address").html(contact.address.homeAddress);
+  $(".work-address").html(contact.address.workAddress);
+
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" + contact.id + ">Delete</button>");
@@ -100,15 +107,18 @@ $(document).ready(function() {
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
     var inputtedEmail = $("input#new-email-address").val();
-    var inputtedAddress = $("input#new-home-address").val();
+    var inputtedHomeAddress = $("input#new-home-address").val();
+    var inputtedWorkAddress = $("input#new-work-address").val();
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
     $("input#new-email-address").val("");
     $("input#new-home-address").val("");
+    $("input#new-work-address").val("");
 
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedAddress);
+    var newAddress = new Address(inputtedHomeAddress, inputtedWorkAddress);
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, newAddress);
     addressBook.addContact(newContact);
     displayContactDetails(addressBook);
   })
