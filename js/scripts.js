@@ -38,11 +38,12 @@ AddressBook.prototype.deleteContact = function(id) {
 }
 
 // Business Logic for Contacts ---------
-function Contact(firstName, lastName, phoneNumber, email) {
+function Contact(firstName, lastName, phoneNumber, email, address) {
   this.firstName = firstName,
   this.lastName = lastName,
   this.phoneNumber = phoneNumber,
-  this.email = email
+  this.email = email,
+  this.address = address
 }
 
 Contact.prototype.fullName = function() {
@@ -84,6 +85,7 @@ function showContact(contactId) {
   $(".last-name").html(contact.lastName);
   $(".phone-number").html(contact.phoneNumber);
   $(".email-address").html(contact.email);
+  $(".physical-address").html(contact.address);
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" + contact.id + ">Delete</button>");
@@ -98,13 +100,15 @@ $(document).ready(function() {
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
     var inputtedEmail = $("input#new-email-address").val();
+    var inputtedAddress = $("input#new-home-address").val();
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
-    $("input#new-email-address").val("")
+    $("input#new-email-address").val("");
+    $("input#new-home-address").val("");
 
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail);
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedAddress);
     addressBook.addContact(newContact);
     displayContactDetails(addressBook);
   })
